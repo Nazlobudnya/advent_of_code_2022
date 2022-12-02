@@ -1,24 +1,46 @@
+#[allow(unused_imports)]
 use std::{env, fs};
 
 mod day_one;
+mod day_two;
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    if args.len() < 2 {
-        panic!("Not enough args");
-    }
-
-    let file_path = &args[1];
-
-    let contents = fs::read_to_string(file_path).expect("File is not there or unable to read");
+fn do_day_one() {
+    let contents =
+        fs::read_to_string("./src/day_one_input.txt").expect("File is not there or unable to read");
 
     let mut contents: Vec<&str> = contents.split("\n").collect();
 
     let day_one_solution = day_one::solution(&mut contents);
 
     println!(
-        "Elf with max calories: [{}] \nTop three elfs total: [{}]",
+        "DAY ONE \nElf with max calories: [{}] \nTop three elfs total: [{}]\n",
         day_one_solution.max_calories, day_one_solution.top_three_elfs
     );
+}
+
+fn do_day_two() {
+    let contents =
+        fs::read_to_string("./src/day_two_input.txt").expect("File is not there or unable to read");
+    let contents: Vec<&str> = contents.split("\n").collect();
+
+    let (day_two_solution_one, day_two_solution_two) = day_two::solution(&contents);
+
+    println!(
+        "DAY TWO \nPlay score first strat: [{}]. \nPlayer score second strat: [{}]\n",
+        day_two_solution_one, day_two_solution_two
+    )
+}
+
+fn main() {
+    // let args: Vec<String> = env::args().collect();
+
+    // if args.len() < 2 {
+    //     panic!("Not enough args");
+    // }
+
+    // let file_path = &args[1];
+
+    do_day_one();
+
+    do_day_two();
 }
