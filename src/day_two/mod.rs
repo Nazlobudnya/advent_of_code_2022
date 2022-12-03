@@ -29,7 +29,7 @@ enum GameResult {
 
 impl GameResult {
     fn from_hands(player: Hand, enemy: Hand) -> GameResult {
-        if beats(player) == enemy {
+        if loses(player) == enemy {
             return GameResult::Z;
         }
 
@@ -54,7 +54,7 @@ impl FromStr for GameResult {
     }
 }
 
-fn beats<'a>(move_hand: Hand) -> Hand {
+fn loses<'a>(move_hand: Hand) -> Hand {
     return match move_hand {
         Hand::A => Hand::C,
         Hand::B => Hand::A,
@@ -62,7 +62,7 @@ fn beats<'a>(move_hand: Hand) -> Hand {
     };
 }
 
-fn loses<'a>(move_hand: Hand) -> Hand {
+fn beats<'a>(move_hand: Hand) -> Hand {
     return match move_hand {
         Hand::A => Hand::B,
         Hand::B => Hand::C,
@@ -80,19 +80,20 @@ fn get_round_score_one(player_move: Hand, enemy_move: Hand) -> usize {
 
 fn get_round_score_two(player_result: GameResult, enemy_move: Hand) -> usize {
     let hand_score = match player_result {
-        GameResult::X => beats(enemy_move) as usize,
-        GameResult::Y => enemy_move as usize,
-        GameResult::Z => loses(enemy_move) as usize,
-    };
+        GameResult::X => loses(enemy_move),
+        GameResult::Y => enemy_move,
+        GameResult::Z => beats(enemy_move),
+    } as usize;
 
     let expeted_game_score = player_result as usize;
 
     expeted_game_score + hand_score
 }
 
-pub fn solution(input: &Vec<&str>) -> (usize, usize) {
+pub fn solution(input: Vec<&str>) -> (usize, usize) {
     let mut score_one = 0usize;
     let mut score_two = 0usize;
+
     for play in input {
         let round: Vec<&str> = play.split(" ").collect();
         score_one += get_round_score_one(

@@ -31,10 +31,10 @@ fn max_three_calories(input: &mut Vec<&str>) -> usize {
     vec[vec.len() - 3..].iter().sum()
 }
 
-pub fn solution(input: &mut Vec<&str>) -> DayOneSolution {
-    let max_calories = max_calories(input);
+pub fn solution(mut input: Vec<&str>) -> DayOneSolution {
+    let max_calories = max_calories(&input);
 
-    let top_three_elfs = max_three_calories(input);
+    let top_three_elfs = max_three_calories(&mut input);
 
     DayOneSolution {
         max_calories,
