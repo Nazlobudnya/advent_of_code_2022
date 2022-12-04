@@ -1,13 +1,13 @@
 #[allow(unused_imports)]
 use std::{env, fs};
 
+mod day_four;
 mod day_one;
 mod day_three;
 mod day_two;
 
 fn do_day_one() {
-    let contents =
-        fs::read_to_string("./src/day_one_input.txt").expect("File is not there or unable to read");
+    let contents = fs::read_to_string("./src/1.in").expect("File is not there or unable to read");
 
     let contents: Vec<&str> = contents.split("\n").collect();
 
@@ -20,8 +20,7 @@ fn do_day_one() {
 }
 
 fn do_day_two() {
-    let contents =
-        fs::read_to_string("./src/day_two_input.txt").expect("File is not there or unable to read");
+    let contents = fs::read_to_string("./src/2.in").expect("File is not there or unable to read");
     let contents: Vec<&str> = contents.split("\n").collect();
 
     let (day_two_solution_one, day_two_solution_two) = day_two::solution(contents);
@@ -33,14 +32,25 @@ fn do_day_two() {
 }
 
 fn do_day_three() {
-    let contents = fs::read_to_string("./src/day_three_input.txt")
-        .expect("File is not there or unable to read");
+    let contents = fs::read_to_string("./src/3.in").expect("File is not there or unable to read");
     let contents: Vec<&str> = contents.split("\n").collect();
 
     let (ans_one, ans_two) = day_three::solution(contents);
 
     println!(
-        "DAY THREE \nSum of prios: [{}]. \nPrios of elf groups of 3: [{}]",
+        "DAY THREE \nSum of prios: [{}]. \nPrios of elf groups of 3: [{}]\n",
+        ans_one, ans_two
+    )
+}
+
+fn do_day_four() {
+    let contents = fs::read_to_string("./src/4.in").expect("File is not there or unable to read");
+    let contents: Vec<&str> = contents.split("\n").collect();
+
+    let (ans_one, ans_two) = day_four::solution(contents);
+
+    println!(
+        "DAY FOUR \nFully in range: [{}]. \nFully or partially in range: [{}]\n",
         ans_one, ans_two
     )
 }
@@ -59,4 +69,6 @@ fn main() {
     do_day_two();
 
     do_day_three();
+
+    do_day_four();
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 def one():
-    with open("../src/day_two_input.txt") as file:
+    with open("../src/2.in") as file:
         input = file.read().strip().split("\n")
 
     hand_mapping = {
