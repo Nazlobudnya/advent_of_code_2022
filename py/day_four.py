@@ -1,4 +1,3 @@
-
 def one():
     with open("../src/4.in") as file:
         input = file.read().strip().split("\n")
