@@ -1,7 +1,7 @@
 use std::time::Instant;
 
 fn solve(input: &String, packet_size: usize) -> usize {
-    let now = Instant::now();
+    let now: Instant = Instant::now();
     let bytes = input.as_bytes();
 
     let mut ans = 0usize;
@@ -24,16 +24,16 @@ fn solve(input: &String, packet_size: usize) -> usize {
     ans
 }
 
-fn solve_version_two(input: &String, packet_size: u32) -> u32 {
+fn solve_version_two(input: &String, packet_size: usize) -> usize {
     let now = Instant::now();
 
     let bytes = input.as_bytes();
 
-    let mut ans = 0u32;
+    let mut ans = 0usize;
     for (idx, window) in bytes.windows(packet_size as usize).enumerate() {
         for w in window {
             let place = w - 'a' as u8;
-            let num = 1u32 << place;
+            let num = 1usize << place;
 
             if ans & num == num {
                 break;
@@ -43,11 +43,11 @@ fn solve_version_two(input: &String, packet_size: u32) -> u32 {
         }
 
         if ans.count_ones() == packet_size as u32 {
-            ans = idx as u32 + packet_size;
+            ans = idx + packet_size;
             break;
         }
 
-        ans = 0u32;
+        ans = 0;
     }
 
     println!(
@@ -109,18 +109,51 @@ fn solve_version_four(input: &String, packet_size: usize) -> usize {
     ans
 }
 
+fn solve_version_five(i: &String, packet_size: usize) -> usize {
+    let now = Instant::now();
+
+    let ans = i
+        .as_bytes()
+        .windows(14)
+        .position(|w| {
+            let mut vec = Vec::with_capacity(packet_size);
+            for x in w {
+                if vec.contains(x) {
+                    return false;
+                }
+
+                vec.push(*x);
+            }
+            return true;
+        })
+        .map(|x| x + packet_size)
+        .unwrap();
+
+    println!(
+        "[{ans}] ver5 for packet_size: [{packet_size: >2}] | time: [{: >12?}]",
+        now.elapsed()
+    );
+    ans
+}
+
 pub fn solution(input: String) -> (usize, usize) {
-    let ans_one = solve(&input, 4);
+    solve(&input, 4);
     solve_version_two(&input, 4);
     solve_version_three(&input, 4);
     solve_version_four(&input, 4);
+    solve_version_five(&input, 4);
 
     println!("");
-    let ans_two = solve(&input, 14);
+    solve(&input, 14);
     solve_version_two(&input, 14);
     solve_version_three(&input, 14);
     solve_version_four(&input, 14);
+    solve_version_five(&input, 14);
+
     println!("");
 
-    (ans_one, ans_two)
+    (
+        solve_version_four(&input, 4),
+        solve_version_four(&input, 14),
+    )
 }
