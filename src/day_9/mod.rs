@@ -106,6 +106,7 @@ pub fn solution(input: String) -> usize {
     hs.len()
 }
 
+#[allow(dead_code)]
 pub fn solution_a(input: String) -> usize {
     let mut hs: HashSet<(isize, isize)> = HashSet::new();
 
